@@ -1,0 +1,33 @@
+export CUDA_VISIBLE_DEVICES=0
+
+python summarization/run_summarization.py \
+  --model_name_or_path $1 \
+  --cache_dir .cache/$1 \
+  --text_column "maintext" \
+  --summary_column "title" \
+  --train_file dataset/train.jsonl \
+  --validation_file dataset/public.jsonl \
+  --max_source_length 1024 \
+  --max_target_length 128 \
+  --num_beams 5 \
+  --output_dir output/$1 \
+  --overwrite_output_dir False \
+  --do_train \
+  --do_eval \
+  --evaluation_strategy steps \
+  --per_device_train_batch_size 16 \
+  --per_device_eval_batch_size 16 \
+  --gradient_accumulation_steps 1 \
+  --eval_accumulation_steps 1 \
+  --eval_delay 1000 \
+  --learning_rate 1e-4 \
+  --weight_decay 1e-4 \
+  --num_train_epochs 10 \
+  --lr_scheduler_type linear \
+  --warmup_ratio 0.1 \
+  --save_strategy steps \
+  --save_steps 1500 \
+  --eval_steps 750 \
+  --adafactor \
+  --report_to all \
+  --predict_with_generate \
