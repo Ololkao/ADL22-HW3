@@ -8,3 +8,4 @@
 .cache/
 dataset/
 output/
+/*.jsonl
