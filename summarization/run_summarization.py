@@ -673,7 +673,7 @@ def main():
     )
 
     # Metric
-    metric = load_metric("rouge.py")
+    metric = load_metric("rouge-tw.py")
     # metric = evaluate.load("rouge")
 
     def postprocess_text(preds, labels):

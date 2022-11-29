@@ -6,10 +6,9 @@ python summarization/run_summarization.py \
   --text_column "maintext" \
   --summary_column "title" \
   --train_file dataset/train.jsonl \
-  --validation_file dataset/public.jsonl \
+  --validation_file dataset/eval.jsonl \
   --max_source_length 1024 \
   --max_target_length 128 \
-  --num_beams 5 \
   --output_dir output/$1 \
   --overwrite_output_dir False \
   --do_train \
