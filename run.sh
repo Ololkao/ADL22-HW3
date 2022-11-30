@@ -8,7 +8,7 @@ python summarization/run_summarization.py \
   --test_file $1 \
   --output_file $2 \
   --output_dir . \
-  --num_beams 5 \
+  --num_beams 9 \
   --do_predict \
   --per_device_eval_batch_size 8 \
   --predict_with_generate \

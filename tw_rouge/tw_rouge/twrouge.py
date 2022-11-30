@@ -14,7 +14,7 @@ if not os.path.exists(os.path.join(data_dir, "model_ws")):
     except:
         data_utils.download_data_url(download_dir)
 
-ws = WS(data_dir)
+ws = WS(data_dir, disable_cuda=False)
 
 
 def tokenize_and_join(sentences):

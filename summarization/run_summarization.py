@@ -257,7 +257,7 @@ class DataTrainingArguments:
         },
     )
     num_beams: Optional[int] = field(
-        default=None,
+        default=1,
         metadata={
             "help": (
                 "Number of beams to use for evaluation. This argument will be passed to ``model.generate``, "
@@ -266,7 +266,7 @@ class DataTrainingArguments:
         },
     )
     temperature: Optional[float] = field(
-        default=None,
+        default=1.0,
         metadata={
             "help": (
                 "The value used to module the next token probabilities. This argument will be passed to ``model.generate``, "
@@ -275,7 +275,7 @@ class DataTrainingArguments:
         },
     )
     top_k: Optional[int] = field(
-        default=None,
+        default=50,
         metadata={
             "help": (
                 "The number of highest probability vocabulary tokens to keep for top-k-filtering."
@@ -284,7 +284,7 @@ class DataTrainingArguments:
         },
     )
     top_p: Optional[float] = field(
-        default=None,
+        default=1.0,
         metadata={
             "help": (
                 "If set to float < 1, only the most probable tokens with probabilities that add up to `top_p` or higher are kept for generation."
@@ -293,7 +293,7 @@ class DataTrainingArguments:
         },
     )
     no_repeat_ngram_size: Optional[int] = field(
-        default=None,
+        default=0,
         metadata={
             "help": (
                 "If set to int > 0, all ngrams of that size can only occur once. This argument will be passed to ``model.generate``, "
@@ -706,6 +706,15 @@ def main():
         result["gen_len"] = np.mean(prediction_lens)
         return result
 
+    gen_kwargs = {
+        "do_sample": data_args.do_sample,
+        "early_stopping": data_args.early_stopping,
+        # "num_beams": data_args.num_beams,
+        "temperature": data_args.temperature,
+        "top_k": data_args.top_k,
+        "top_p": data_args.top_p,
+    }
+
     # Initialize our Trainer
     trainer = Seq2SeqTrainer(
         model=model,
@@ -760,7 +769,7 @@ def main():
         logger.info("*** Predict ***")
 
         predict_results = trainer.predict(
-            predict_dataset, metric_key_prefix="predict", max_length=max_length, num_beams=num_beams
+            predict_dataset, metric_key_prefix="predict", max_length=max_length, num_beams=num_beams, **gen_kwargs
         )
         metrics = predict_results.metrics
         max_predict_samples = (
