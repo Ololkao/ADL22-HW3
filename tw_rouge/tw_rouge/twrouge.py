@@ -9,10 +9,7 @@ download_dir = os.path.join(cache_dir, "ckiptagger")
 data_dir = os.path.join(cache_dir, "ckiptagger/data")
 os.makedirs(download_dir, exist_ok=True)
 if not os.path.exists(os.path.join(data_dir, "model_ws")):
-    try:
-        data_utils.download_data_gdown(download_dir)
-    except:
-        data_utils.download_data_url(download_dir)
+    data_utils.download_data_url(download_dir)
 
 ws = WS(data_dir, disable_cuda=False)
 
